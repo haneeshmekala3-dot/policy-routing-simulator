@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Policy Based Routing Simulator</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <header class="app-header">
+            <h1>Policy Based Routing Simulator</h1>
+            <p>Vibrant Dashboard Edition</p>
+        </header>
+
+        <main class="app-main">
+            <!-- Top Panel: Network Map -->
+            <section class="map-panel white-card">
+                <div class="map-header">
+                    <h2>Network Topology</h2>
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <select id="topology-select" class="vibrant-select" style="padding: 4px 10px; width: auto; font-size: 0.9rem;"></select>
+                        <div id="custom-gen-ui" style="display: none; align-items: center; gap: 10px;">
+                            <label for="custom-src" style="font-size: 0.85rem; font-weight: 600; color: var(--text-secondary);">Sources:</label>
+                            <input type="number" id="custom-src" value="3" min="1" max="6" style="width: 50px; padding: 4px; border-radius: 6px; border: 2px solid #e2e8f0; font-family: 'Poppins';">
+                            <label for="custom-dst" style="font-size: 0.85rem; font-weight: 600; color: var(--text-secondary);">Dests:</label>
+                            <input type="number" id="custom-dst" value="3" min="1" max="6" style="width: 50px; padding: 4px; border-radius: 6px; border: 2px solid #e2e8f0; font-family: 'Poppins';">
+                            <button id="btn-generate-topology" class="btn btn-gradient-primary" style="padding: 6px 12px; margin: 0; font-size: 0.8rem; border-radius: 8px;">Generate</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="map-container" id="map-container">
+                    <svg id="network-links" class="network-links" width="100%" height="100%">
+                        <!-- Links will be generated dynamically -->
+                    </svg>
+
+                    <div id="nodes-container">
+                        <!-- Nodes will be generated dynamically -->
+                    </div>
+
+                    <!-- Packet Animation Container -->
+                    <div id="packet" class="packet"></div>
+                </div>
+            </section>
+
+            <!-- Bottom Panel: Dashboard Controls -->
+            <aside class="dashboard-panel">
+                
+                <!-- Left: Simulation Sender -->
+                <section class="control-section white-card simulation-box">
+                    <h2>🚀 Simulation</h2>
+                    <div class="form-group">
+                        <label for="sim-source">Send From:</label>
+                        <select id="sim-source" class="vibrant-select"></select>
+                    </div>
+                    <div class="form-group">
+                        <label for="sim-dest">Send To:</label>
+                        <select id="sim-dest" class="vibrant-select"></select>
+                    </div>
+                    <button id="btn-send-packet" class="btn btn-gradient-primary">SEND PACKET</button>
+                    <div class="log-box" id="sim-log">
+                        <p class="placeholder">Awaiting transmission...</p>
+                    </div>
+                </section>
+
+                <!-- Center: Add Rule -->
+                <section class="control-section white-card add-rule-box">
+                    <h2>✏️ Add Policy Rule</h2>
+                    <div class="add-rule-form">
+                        <div class="form-group" style="margin-bottom: 8px;">
+                            <label for="rule-router">Apply on Node:</label>
+                            <select id="rule-router" class="vibrant-select"></select>
+                        </div>
+                        <div class="form-group" style="margin-bottom: 8px;">
+                            <label for="rule-source">If Source IP is:</label>
+                            <select id="rule-source" class="vibrant-select"></select>
+                        </div>
+                        <div class="form-group" style="margin-bottom: 8px;">
+                            <label for="rule-nexthop">Set Next Hop to:</label>
+                            <select id="rule-nexthop" class="vibrant-select"></select>
+                        </div>
+                        <button id="btn-add-rule" class="btn btn-gradient-secondary">ADD RULE</button>
+                    </div>
+                </section>
+
+                <!-- Right: Rules List -->
+                <section class="control-section white-card list-box">
+                    <h2>📋 Current Policies</h2>
+                    <div class="rules-container">
+                        <table id="rules-table" class="rules-table">
+                            <thead>
+                                <tr>
+                                    <th>Router</th>
+                                    <th>Src IP</th>
+                                    <th>Next Hop</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="rules-body">
+                                <tr id="no-rules-row"><td colspan="3" class="text-center">No rules active.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+            </aside>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
